@@ -1,0 +1,23 @@
+name: Backend CD
+on:
+  workflow_run:
+    workflows: [ "Backend CI" ]
+    branches: [ "main" ]
+    types:
+      - completed
+jobs:
+  server-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+            docker stop backend || true
+            docker rm backend || true
+            docker system prune -a -f
+            docker run -d --name backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
