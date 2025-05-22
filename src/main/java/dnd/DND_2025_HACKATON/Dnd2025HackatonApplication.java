@@ -1,4 +1,4 @@
-package dnd.DND_2025_HACKATON;
+package dnd.dnd_2025_hackaton;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
