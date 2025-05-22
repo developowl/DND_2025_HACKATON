@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController implements HelloApiSpec {
 
+    @Override
     @GetMapping("/hello")
     public String hello() {
         return "Hello! 우리 팀 잘 해봅시다!!";
